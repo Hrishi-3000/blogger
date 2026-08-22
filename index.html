@@ -502,9 +502,35 @@
   /* reveal-on-scroll utility */
   .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease;}
   .reveal.in-view{opacity:1; transform:translateY(0);}
+
+  /* ---------- audio control ---------- */
+  #muteToggle{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    z-index:200;
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--ink-2);
+    border:1px solid var(--gold-dim);
+    color:var(--gold);
+    border-radius:50%;
+    font-size:1.1rem;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  #muteToggle:hover{transform:translateY(-2px) scale(1.05); border-color:var(--gold);}
 </style>
 </head>
 <body>
+
+<!-- Vande Mataram background audio -->
+<audio id="bgAudio" src="VandeMataram.mp3" loop preload="auto"></audio>
+<button id="muteToggle" aria-label="Toggle background music" title="Toggle background music">🔊</button>
 
 <header class="site-nav" id="siteNav">
   <div class="nav-inner">
@@ -773,6 +799,46 @@
     });
   }, { threshold: 0.15 });
   revealTargets.forEach(el => io.observe(el));
+
+  // ---- Background audio: Vande Mataram ----
+  const bgAudio = document.getElementById('bgAudio');
+  const muteBtn = document.getElementById('muteToggle');
+  let userPaused = false;
+
+  function updateIcon() {
+    muteBtn.textContent = bgAudio.paused ? '🔇' : '🔊';
+  }
+
+  function tryAutoplay() {
+    bgAudio.play().then(updateIcon).catch(() => {
+      // Autoplay blocked by browser — wait for first interaction
+      updateIcon();
+      const resume = () => {
+        if (!userPaused) {
+          bgAudio.play().then(updateIcon).catch(() => {});
+        }
+        ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt =>
+          document.removeEventListener(evt, resume)
+        );
+      };
+      ['click', 'touchstart', 'scroll', 'keydown'].forEach(evt =>
+        document.addEventListener(evt, resume, { once: true })
+      );
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', tryAutoplay);
+
+  muteBtn.addEventListener('click', () => {
+    if (bgAudio.paused) {
+      userPaused = false;
+      bgAudio.play().then(updateIcon).catch(() => {});
+    } else {
+      userPaused = true;
+      bgAudio.pause();
+      updateIcon();
+    }
+  });
 </script>
 
 </body>
