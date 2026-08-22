@@ -8,12 +8,13 @@
 <meta name="keywords" content="Hrishikesh Shahane, Indian history blog, Bharat Dynastic History, Maratha Empire treaties, Param Vir Chakra, Dashavatar Vishnu, Indian nationalism, military history, Indian civilization, history blogger India">
 <meta name="author" content="Hrishikesh Shahane">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E1320">
 <link rel="canonical" href="https://hrishikeshshahane.vercel.app/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hrishikesh Shahane | Chronicler of Bharat's History">
-<meta property="og:description" content="Seven ongoing chronicles on Indian dynasties, treaties, mythology, nationalism, and wartime courage — researched properly, told in order.">
+<meta property="og:description" content="Seven ongoing chronicles on Indian dynasties, treaties, nationalism, and wartime courage — researched properly, told in order.">
 <meta property="og:url" content="https://hrishikeshshahane.vercel.app/">
 <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhejv92O16dXmbZdmGC_MvrbOxzGZxKvjyLyR3tYDOuto3CS06H8qOStgnZy3DVWIlROElbmU_CbdXLAs3s82jSpSrG5mecW_Yusy6zx1lCou7PkscK8WtxRXiIbTsuoJHE3iT4CDUOlSmieU-22mYhBCmk5d-d9xQIraDXZ4g9XyslfQ/s400/Ereh_.jpg">
 <meta property="og:locale" content="en_IN">
@@ -21,7 +22,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Hrishikesh Shahane | Chronicler of Bharat's History">
-<meta name="twitter:description" content="Seven ongoing chronicles on Indian dynasties, treaties, mythology, nationalism, and wartime courage.">
+<meta name="twitter:description" content="Seven ongoing chronicles on Indian dynasties, treaties, nationalism, and wartime courage.">
 <meta name="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhejv92O16dXmbZdmGC_MvrbOxzGZxKvjyLyR3tYDOuto3CS06H8qOStgnZy3DVWIlROElbmU_CbdXLAs3s82jSpSrG5mecW_Yusy6zx1lCou7PkscK8WtxRXiIbTsuoJHE3iT4CDUOlSmieU-22mYhBCmk5d-d9xQIraDXZ4g9XyslfQ/s400/Ereh_.jpg">
 
 <!-- Favicon (inline SVG seal, no external file needed) -->
@@ -36,7 +37,7 @@
   "url": "https://hrishikeshshahane.vercel.app/",
   "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhejv92O16dXmbZdmGC_MvrbOxzGZxKvjyLyR3tYDOuto3CS06H8qOStgnZy3DVWIlROElbmU_CbdXLAs3s82jSpSrG5mecW_Yusy6zx1lCou7PkscK8WtxRXiIbTsuoJHE3iT4CDUOlSmieU-22mYhBCmk5d-d9xQIraDXZ4g9XyslfQ/s400/Ereh_.jpg",
   "jobTitle": "History Blogger & Researcher",
-  "description": "B.Tech Computer Science (AI & ML) student, Indian history researcher, and writing about dynasties, treaties, mythology, and military history.",
+  "description": "B.Tech Computer Science (AI & ML) student, Indian history researcher, and writing about dynasties, treaties, and military history.",
   "sameAs": [
     "https://www.blogger.com/profile/06534898699057353590",
     "https://github.com/Hrishi-3000",
@@ -44,7 +45,7 @@
     "https://www.instagram.com/hrishikesh__2003",
     "https://hrishikesh-shahane-portfolio.vercel.app/"
   ],
-  "knowsAbout": ["Indian History", "Military History", "World History", "Geopolitics", "Mythology", "Indian Civilization", "Artificial Intelligence", "Web Development"]
+  "knowsAbout": ["Indian History", "Military History", "World History", "Geopolitics", "Indian Civilization", "Artificial Intelligence", "Web Development"]
 }
 </script>
 <script type="application/ld+json">
@@ -77,6 +78,7 @@
     --parchment-dim:#A9A38C;
     --gold:#C6A24D;
     --gold-dim:#8A7238;
+    --gold-bright:#E8C87A;
     --maroon:#8B2E2E;
     --teal:#3E6E67;
     --line: rgba(198,162,77,0.22);
@@ -100,6 +102,11 @@
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    cursor:none;
+  }
+
+  @media (hover:none), (pointer:coarse){
+    body{cursor:auto;}
   }
 
   ::selection{background:var(--gold); color:var(--ink);}
@@ -145,6 +152,83 @@
     z-index:0;
   }
 
+  /* fine paper grain, laid over everything at very low opacity */
+  .grain{
+    position:fixed; inset:-100px;
+    z-index:2;
+    pointer-events:none;
+    opacity:0.05;
+    mix-blend-mode:overlay;
+  }
+
+  /* ---------- custom cursor ---------- */
+  .cursor-dot, .cursor-ring{
+    position:fixed;
+    top:0; left:0;
+    pointer-events:none;
+    z-index:999;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+  }
+  .cursor-dot{
+    width:5px; height:5px;
+    background:var(--gold);
+  }
+  .cursor-ring{
+    width:34px; height:34px;
+    border:1px solid var(--gold-dim);
+    transition:width .25s ease, height .25s ease, border-color .25s ease, opacity .25s ease;
+    opacity:0.85;
+  }
+  .cursor-ring.hovering{
+    width:56px; height:56px;
+    border-color:var(--gold);
+    background:rgba(198,162,77,0.08);
+  }
+  @media (hover:none), (pointer:coarse){
+    .cursor-dot, .cursor-ring{display:none;}
+  }
+
+  /* ---------- scroll progress ---------- */
+  .progress-thread{
+    position:fixed; top:0; left:0;
+    height:2px;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright));
+    z-index:150;
+    transition:width .08s linear;
+  }
+
+  /* ---------- intro seal overlay ---------- */
+  .intro-overlay{
+    position:fixed; inset:0;
+    background:var(--ink);
+    z-index:500;
+    display:flex; align-items:center; justify-content:center;
+    transition:opacity .7s ease .3s, visibility .7s ease .3s;
+  }
+  .intro-overlay.done{opacity:0; visibility:hidden;}
+  .intro-seal{
+    width:96px; height:96px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif;
+    font-size:2rem;
+    color:var(--gold);
+    opacity:0;
+    transform:scale(0.6);
+    animation:sealIn 1s cubic-bezier(.2,.9,.25,1) forwards;
+  }
+  @keyframes sealIn{
+    0%{opacity:0; transform:scale(0.5) rotate(-8deg);}
+    55%{opacity:1; transform:scale(1.05) rotate(1deg);}
+    100%{opacity:1; transform:scale(1) rotate(0deg);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .intro-overlay{display:none;}
+  }
+
   /* ---------- nav ---------- */
   header.site-nav{
     position:fixed; top:0; left:0; right:0;
@@ -181,7 +265,9 @@
     font-size:0.65rem;
     color:var(--gold);
     flex-shrink:0;
+    transition:transform .4s cubic-bezier(.2,.9,.25,1), background .3s ease;
   }
+  .brand:hover .seal{transform:rotate(18deg); background:rgba(198,162,77,0.1);}
   nav.nav-links{
     display:flex; gap:28px;
     font-family:'Space Mono', monospace;
@@ -192,7 +278,15 @@
     color:var(--parchment-dim);
     transition:color .2s ease;
     position:relative;
+    padding-bottom:2px;
   }
+  nav.nav-links a:not(.nav-cta)::after{
+    content:"";
+    position:absolute; left:0; right:100%; bottom:0;
+    height:1px; background:var(--gold);
+    transition:right .25s ease;
+  }
+  nav.nav-links a:not(.nav-cta):hover::after{right:0;}
   nav.nav-links a:hover{color:var(--gold);}
   .nav-cta{
     border:1px solid var(--gold-dim);
@@ -231,10 +325,38 @@
     justify-content:center;
     padding:140px 0 80px;
     z-index:1;
+    overflow:hidden;
   }
+  .hero-glow{
+    position:absolute;
+    width:520px; height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(198,162,77,0.16), transparent 70%);
+    pointer-events:none;
+    left:0; top:0;
+    transform:translate(-50%,-50%);
+    transition:opacity .4s ease;
+    z-index:0;
+    mix-blend-mode:screen;
+  }
+  @media (max-width:820px){.hero-glow{display:none;}}
+
+  .hero-motif{
+    position:absolute;
+    right:-6%; top:50%;
+    transform:translateY(-50%);
+    width:min(46vw, 560px);
+    opacity:0.5;
+    pointer-events:none;
+    z-index:0;
+  }
+  @media (max-width:1000px){.hero-motif{display:none;}}
+
   .hero-grid{
     display:block;
     max-width:760px;
+    position:relative;
+    z-index:1;
   }
 
   .hero-eyebrow{margin-bottom:22px; display:flex; align-items:center; gap:14px;}
@@ -282,12 +404,13 @@
     letter-spacing:0.06em;
     text-transform:uppercase;
     border-radius:2px;
-    transition:all .25s ease;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
     cursor:pointer;
     border:1px solid transparent;
+    will-change:transform;
   }
   .btn-primary{background:var(--gold); color:var(--ink);}
-  .btn-primary:hover{background:#dab766; transform:translateY(-2px);}
+  .btn-primary:hover{background:var(--gold-bright);}
   .btn-ghost{border-color:var(--line); color:var(--parchment);}
   .btn-ghost:hover{border-color:var(--gold); color:var(--gold);}
 
@@ -299,6 +422,7 @@
     letter-spacing:0.15em;
     color:var(--parchment-dim);
     text-transform:uppercase;
+    z-index:1;
   }
   .scroll-cue .line{width:1px; height:40px; background:linear-gradient(var(--gold), transparent);}
   @media (max-width:820px){.scroll-cue{display:none;}}
@@ -317,6 +441,8 @@
     margin:0 auto;
   }
 
+  #chronicle, #about, #work, #connect{scroll-margin-top:80px;}
+
   /* ---------- chronicle / timeline ---------- */
   .chronicle{background:linear-gradient(180deg, transparent, rgba(198,162,77,0.03), transparent);}
   .timeline{
@@ -329,27 +455,58 @@
     opacity:0;
     transform:translateY(24px);
     transition:opacity .7s ease, transform .7s ease;
+    transition-delay:calc(var(--i, 0) * 70ms);
   }
   .chapter.in-view{opacity:1; transform:translateY(0);}
 
   .chapter-card{
+    position:relative;
     height:100%;
     background:var(--ink-2);
     border:1px solid var(--line);
     border-radius:6px;
     padding:30px 32px;
-    transition:border-color .3s ease, transform .3s ease;
+    overflow:hidden;
+    transition:border-color .3s ease, transform .15s ease, box-shadow .3s ease;
+    transform-style:preserve-3d;
+    will-change:transform;
   }
-  .chapter-card:hover{border-color:var(--gold-dim); transform:translateY(-4px);}
+  .chapter-card:hover{border-color:var(--gold-dim); box-shadow:var(--shadow);}
+  .chapter-card .numeral{
+    position:absolute;
+    top:-8px; right:14px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:4.2rem;
+    color:var(--parchment);
+    opacity:0.05;
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+  }
+  .chapter-card .card-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+  }
   .chapter-card .cat{
     font-family:'Space Mono', monospace;
     font-size:0.68rem;
     letter-spacing:0.12em;
     text-transform:uppercase;
     color:var(--teal);
-    margin-bottom:8px;
     display:block;
   }
+  .chapter-card .glyph{
+    width:22px; height:22px;
+    flex-shrink:0;
+    color:var(--gold-dim);
+    transition:color .3s ease, transform .3s ease;
+  }
+  .chapter-card:hover .glyph{color:var(--gold); transform:scale(1.08);}
   .chapter-card h3{
     font-size:1.35rem;
     color:var(--parchment);
@@ -372,7 +529,7 @@
     padding-bottom:2px;
     transition:gap .2s ease, color .2s ease;
   }
-  .chapter-link:hover{gap:12px; color:#dab766;}
+  .chapter-link:hover{gap:12px; color:var(--gold-bright);}
 
   /* ---------- about ---------- */
   .about-grid{
@@ -391,6 +548,15 @@
     font-weight:400;
     line-height:1.5;
   }
+  .about-copy p:first-child::first-letter{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:3.6rem;
+    float:left;
+    line-height:0.8;
+    padding:6px 10px 0 0;
+    color:var(--gold);
+  }
 
   .tag-cloud{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
   .tag{
@@ -401,7 +567,9 @@
     border:1px solid var(--line);
     border-radius:20px;
     color:var(--parchment-dim);
+    transition:border-color .25s ease, color .25s ease;
   }
+  .tag:hover{border-color:var(--gold-dim); color:var(--gold);}
 
   .stack-card{
     background:var(--ink-2);
@@ -441,8 +609,8 @@
     color:var(--parchment);
     line-height:1.5;
   }
-  .vision blockquote::before{content:"“";}
-  .vision blockquote::after{content:"”";}
+  .vision blockquote::before{content:"\201C";}
+  .vision blockquote::after{content:"\201D";}
 
   /* ---------- connect ---------- */
   .connect-grid{
@@ -452,13 +620,17 @@
     margin-top:48px;
   }
   .connect-card{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease, transform .6s ease, border-color .25s ease, box-shadow .25s ease;
+    transition-delay:calc(var(--i, 0) * 70ms);
     background:var(--ink-2);
     border:1px solid var(--line);
     border-radius:6px;
     padding:26px;
-    transition:transform .25s ease, border-color .25s ease;
   }
-  .connect-card:hover{transform:translateY(-4px); border-color:var(--gold-dim);}
+  .connect-card.in-view{opacity:1; transform:translateY(0);}
+  .connect-card:hover{border-color:var(--gold-dim); box-shadow:var(--shadow); transform:translateY(-4px);}
   .connect-card .cat{
     font-family:'Space Mono', monospace;
     font-size:0.65rem;
@@ -528,6 +700,26 @@
 </head>
 <body>
 
+<!-- intro seal -->
+<div class="intro-overlay" id="introOverlay" aria-hidden="true">
+  <div class="intro-seal">HS</div>
+</div>
+
+<!-- scroll progress -->
+<div class="progress-thread" id="progressThread"></div>
+
+<!-- custom cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- grain overlay -->
+<svg class="grain" aria-hidden="true">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
+</svg>
+
 <!-- Vande Mataram background audio -->
 <audio id="bgAudio" src="VandeMataram.mp3" loop preload="auto"></audio>
 <button id="muteToggle" aria-label="Toggle background music" title="Toggle background music">🔊</button>
@@ -551,7 +743,19 @@
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="heroSection">
+    <div class="hero-glow" id="heroGlow"></div>
+    <svg class="hero-motif" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="96" fill="none" stroke="#C6A24D" stroke-width="0.6"/>
+      <circle cx="100" cy="100" r="76" fill="none" stroke="#C6A24D" stroke-width="0.4"/>
+      <g stroke="#C6A24D" stroke-width="0.5">
+        <line x1="100" y1="4" x2="100" y2="196"/>
+        <line x1="4" y1="100" x2="196" y2="100"/>
+        <line x1="29" y1="29" x2="171" y2="171"/>
+        <line x1="171" y1="29" x2="29" y2="171"/>
+      </g>
+      <circle cx="100" cy="100" r="6" fill="#C6A24D"/>
+    </svg>
     <div class="wrap hero-grid">
       <div class="hero-eyebrow">
         <span class="thread"></span>
@@ -582,63 +786,91 @@
 
       <div class="timeline">
 
-        <article class="chapter">
+        <article class="chapter" style="--i:0">
           <div class="chapter-card">
-            <span class="cat">Bharat Dynastic History</span>
+            <span class="numeral">I</span>
+            <div class="card-top">
+              <span class="cat">Bharat Dynastic History</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 18h18M4 18l1-8 3 3 4-6 4 6 3-3 1 8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            </div>
             <h3>Phase I: Ancient Bharat</h3>
             <p>From the Indus Valley to the classical age — the dynasties that laid India's earliest political and cultural foundations.</p>
             <a class="chapter-link" href="https://bharatdynastichistory1.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:1">
           <div class="chapter-card">
-            <span class="cat">Diplomacy</span>
+            <span class="numeral">II</span>
+            <div class="card-top">
+              <span class="cat">Diplomacy</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h9l4 4v14H6z" stroke-linejoin="round"/><path d="M9 10h6M9 14h6M9 18h3" stroke-linecap="round"/></svg>
+            </div>
             <h3>Important Treaties During the Pre-Colonial Era</h3>
             <p>The political agreements that defined the rise and reach of the Maratha Empire.</p>
             <a class="chapter-link" href="https://treatiesmarathaempire.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:2">
           <div class="chapter-card">
-            <span class="cat">World History</span>
+            <span class="numeral">III</span>
+            <div class="card-top">
+              <span class="cat">World History</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18" /></svg>
+            </div>
             <h3>Nationalists Across The World</h3>
             <p>The leaders and movements whose ideas of nationhood reshaped their countries.</p>
             <a class="chapter-link" href="https://nationalistsacrosstheworld.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:3">
           <div class="chapter-card">
-            <span class="cat">Mythology</span>
+            <span class="numeral">IV</span>
+            <div class="card-top">
+              <span class="cat">Mythology</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21c-4-2.5-7-5.8-7-9.5C5 7.4 8.1 4 12 4s7 3.4 7 7.5c0 3.7-3 7-7 9.5z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.4"/></svg>
+            </div>
             <h3>Dashavatar: 10 Avatars of God Vishnu</h3>
             <p>The philosophy and symbolism behind Vishnu's ten incarnations, read as more than mythology.</p>
             <a class="chapter-link" href="https://dashavatar-vishnu.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:4">
           <div class="chapter-card">
-            <span class="cat">Diplomacy</span>
+            <span class="numeral">V</span>
+            <div class="card-top">
+              <span class="cat">Diplomacy</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h9l4 4v14H6z" stroke-linejoin="round"/><path d="M9 10h6M9 14h6M9 18h3" stroke-linecap="round"/></svg>
+            </div>
             <h3>Important Treaties in Past</h3>
             <p>Beyond Maratha borders — the treaties that quietly redrew the subcontinent's map.</p>
             <a class="chapter-link" href="https://hrishihistoryfacts.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:5">
           <div class="chapter-card">
-            <span class="cat">Bharat Dynastic History</span>
+            <span class="numeral">VI</span>
+            <div class="card-top">
+              <span class="cat">Bharat Dynastic History</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 18h18M4 18l1-8 3 3 4-6 4 6 3-3 1 8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            </div>
             <h3>Phase II: Age of Regional Kingdoms</h3>
             <p>The medieval mosaic of regional powers that rose once the classical empires fractured.</p>
             <a class="chapter-link" href="https://bharatdynastichistory2.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
           </div>
         </article>
 
-        <article class="chapter">
+        <article class="chapter" style="--i:6">
           <div class="chapter-card">
-            <span class="cat">Military History</span>
+            <span class="numeral">VII</span>
+            <div class="card-top">
+              <span class="cat">Military History</span>
+              <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7 21l5-3 5 3-2-7.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            </div>
             <h3>Param Vir Chakra: Stories of Courage Beyond Limits</h3>
             <p>The men behind India's highest wartime gallantry award, and what their courage cost.</p>
             <a class="chapter-link" href="https://paramvirchakraindia.blogspot.com/" target="_blank" rel="noopener">Read the series →</a>
@@ -723,28 +955,28 @@
         <h2>Connect with me.</h2>
         <p>Always glad to learn, collaborate, and talk history, technology, or anything in between.</p>
       </div>
-      <div class="connect-grid reveal">
-        <a class="connect-card" href="https://www.blogger.com/profile/06534898699057353590" target="_blank" rel="noopener">
+      <div class="connect-grid">
+        <a class="connect-card" style="--i:0" href="https://www.blogger.com/profile/06534898699057353590" target="_blank" rel="noopener">
           <span class="cat">All Blogs</span>
           <h4>Blogger Profile</h4>
           <p>The full archive across every series.</p>
         </a>
-        <a class="connect-card" href="https://hrishikesh-shahane-portfolio.vercel.app/" target="_blank" rel="noopener">
+        <a class="connect-card" style="--i:1" href="https://hrishikesh-shahane-portfolio.vercel.app/" target="_blank" rel="noopener">
           <span class="cat">Portfolio</span>
           <h4>Projects &amp; Builds</h4>
           <p>AI, ML, and full-stack work.</p>
         </a>
-        <a class="connect-card" href="https://github.com/Hrishi-3000" target="_blank" rel="noopener">
+        <a class="connect-card" style="--i:2" href="https://github.com/Hrishi-3000" target="_blank" rel="noopener">
           <span class="cat">Code</span>
           <h4>GitHub</h4>
           <p>Repositories and experiments.</p>
         </a>
-        <a class="connect-card" href="https://www.linkedin.com/in/hrishikesh-shahane-a0a19a258/" target="_blank" rel="noopener">
+        <a class="connect-card" style="--i:3" href="https://www.linkedin.com/in/hrishikesh-shahane-a0a19a258/" target="_blank" rel="noopener">
           <span class="cat">Professional</span>
           <h4>LinkedIn</h4>
           <p>Career &amp; collaboration.</p>
         </a>
-        <a class="connect-card" href="https://www.instagram.com/hrishikesh__2003" target="_blank" rel="noopener">
+        <a class="connect-card" style="--i:4" href="https://www.instagram.com/hrishikesh__2003" target="_blank" rel="noopener">
           <span class="cat">Behind the Scenes</span>
           <h4>Instagram</h4>
           <p>@hrishikesh__2003</p>
@@ -767,8 +999,23 @@
 </footer>
 
 <script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
   // Year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Intro seal — dismiss after animation, or instantly if reduced motion
+  const introOverlay = document.getElementById('introOverlay');
+  if (reducedMotion) {
+    introOverlay.classList.add('done');
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(() => introOverlay.classList.add('done'), 900);
+    });
+    // safety net in case load never fires cleanly
+    setTimeout(() => introOverlay.classList.add('done'), 2500);
+  }
 
   // Mobile nav toggle
   const navToggle = document.getElementById('navToggle');
@@ -782,14 +1029,21 @@
     navToggle.setAttribute('aria-expanded', 'false');
   }));
 
-  // Nav background on scroll
+  // Nav background + scroll progress on scroll
   const siteNav = document.getElementById('siteNav');
-  window.addEventListener('scroll', () => {
+  const progressThread = document.getElementById('progressThread');
+  function onScroll(){
     siteNav.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progressThread.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  // Reveal on scroll (chapters + generic reveal elements)
-  const revealTargets = document.querySelectorAll('.reveal, .chapter');
+  // Reveal on scroll (chapters + generic reveal elements + connect cards)
+  const revealTargets = document.querySelectorAll('.reveal, .chapter, .connect-card');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -799,6 +1053,61 @@
     });
   }, { threshold: 0.15 });
   revealTargets.forEach(el => io.observe(el));
+
+  // ---- Custom cursor ----
+  if (isFinePointer && !reducedMotion) {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = window.innerWidth/2, my = window.innerHeight/2;
+    let rx = mx, ry = my;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    function animateRing(){
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button, .tag').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+    });
+  } else {
+    document.getElementById('cursorDot').style.display = 'none';
+    document.getElementById('cursorRing').style.display = 'none';
+  }
+
+  // ---- Hero candlelight glow follows cursor ----
+  if (isFinePointer && !reducedMotion) {
+    const heroSection = document.getElementById('heroSection');
+    const heroGlow = document.getElementById('heroGlow');
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      heroGlow.style.left = (e.clientX - rect.left) + 'px';
+      heroGlow.style.top = (e.clientY - rect.top) + 'px';
+    });
+  } else {
+    const heroGlow = document.getElementById('heroGlow');
+    if (heroGlow) heroGlow.style.display = 'none';
+  }
+
+  // ---- Subtle 3D tilt on chapter + connect cards ----
+  if (isFinePointer && !reducedMotion) {
+    document.querySelectorAll('.chapter-card, .connect-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(700px) rotateX(${(-py*4).toFixed(2)}deg) rotateY(${(px*4).toFixed(2)}deg) translateY(-2px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
 
   // ---- Background audio: Vande Mataram ----
   const bgAudio = document.getElementById('bgAudio');
